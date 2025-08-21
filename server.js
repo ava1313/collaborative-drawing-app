@@ -1,30 +1,42 @@
 const express = require('express');
 const http = require('http');
-const { Server } = require('socket.io');
-const path = require('path');
-
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = require('socket.io')(server);
+
+const PORT = process.env.PORT || 3000;
 
 // Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-// Handle socket connections
 io.on('connection', (socket) => {
   console.log('A user connected');
-  
-  // When a drawing event is received from a client, broadcast it to others
+
+  // Join default room initially
+  socket.join('default');
+  socket.room = 'default';
+
+  // Handle room join
+  socket.on('joinRoom', (room) => {
+    if (socket.room) {
+      socket.leave(socket.room);
+    }
+    socket.join(room);
+    socket.room = room;
+    console.log(`User joined room: ${room}`);
+  });
+
+  // When a drawing event is received from a client, broadcast it to others in the same room
   socket.on('drawing', (data) => {
-    socket.broadcast.emit('drawing', data);
+    const room = socket.room || 'default';
+    socket.to(room).emit('drawing', data);
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+  console.log('User disconnected');
   });
 });
 
-const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
