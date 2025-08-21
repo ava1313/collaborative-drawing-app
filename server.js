@@ -32,8 +32,14 @@ io.on('connection', (socket) => {
     socket.to(room).emit('drawing', data);
   });
 
+  // When a clear event is received from a client, broadcast it to others in the same room
+  socket.on('clear', () => {
+    const room = socket.room || 'default';
+    socket.to(room).emit('clear');
+  });
+
   socket.on('disconnect', () => {
-  console.log('User disconnected');
+    console.log('User disconnected');
   });
 });
 
