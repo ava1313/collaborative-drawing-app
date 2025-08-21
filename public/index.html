@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Collaborative Drawing App</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: Arial, sans-serif;
-    }
-    #drawingCanvas {
-      border: 1px solid #ccc;
-      cursor: crosshair;
-    }
-  </style>
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-  <h1>Collaborative Drawing App</h1>
+  <nav>
+    <div class="logo">Collaborative Drawing</div>
+    <div class="room-form">
+      <input type="text" id="roomInput" placeholder="Room name">
+      <button id="joinButton">Join</button>
+    </div>
+  </nav>
+
+  <div class="toolbar">
+    <label for="colorPicker">Color:</label>
+    <input type="color" id="colorPicker" value="#000000">
+    <label for="brushSize">Brush:</label>
+    <input type="range" id="brushSize" min="1" max="20" value="2">
+  </div>
+
   <canvas id="drawingCanvas" width="800" height="600"></canvas>
 
-  <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
