@@ -1,11 +1,92 @@
+/* General styling */
 body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  align-items: stretch;
 }
 
+/* Navigation bar */
+nav {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav form {
+  display: flex;
+  gap: 10px;
+}
+
+nav input[type="text"] {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+nav button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+nav button:hover {
+  background-color: #c0392b;
+}
+
+/* Toolbar for drawing tools */
+.toolbar {
+  background-color: #ecf0f1;
+  padding: 10px 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar label {
+  margin-right: 5px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.toolbar input[type="color"],
+.toolbar input[type="range"] {
+  cursor: pointer;
+}
+
+/* Canvas styling */
 #drawingCanvas {
-  border: 1px solid #ccc;
+  border: 2px solid #bdc3c7;
+  background-color: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
   cursor: crosshair;
+  touch-action: none; /* prevents default scroll on touch devices */
+  display: block;
+}
+
+/* Responsive canvas container */
+@media (max-width: 850px) {
+  #drawingCanvas {
+    width: 100%;
+    height: auto;
+  }
 }
